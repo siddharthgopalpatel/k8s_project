@@ -1,0 +1,22 @@
+kind: ReplicaSet
+apiVersion: apps/v1
+metadata:
+        name: testrs
+spec:
+        replicas: 2
+        selector:
+                matchExpressions:
+                        - {key: env, operator: In, values: [prod]}
+                        - {key: proj, operator: In, values: [ipcc]}
+        template:
+                metadata:
+                        name: testpod
+                        labels:
+                                env: prod
+                                proj: ipcc
+                spec:
+                        containers:
+                                - name: testc
+                                  image: ubuntu
+                                  command: ["/bin/bash", "-c", "while true; do echo sidd; sleep 5; done"]
+                        restartPolicy: Always
