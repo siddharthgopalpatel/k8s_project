@@ -1,73 +1,86 @@
 import subprocess
+import time
+import minikube_status
 
-def minikube_installation():
+def countdown():
+        t = 5
+        while t:
+                mins, secs = divmod(t, 60)
+                timer = '{:02d}:{:02d}'.format(mins, secs)
+                print("*****Waiting Time Countdown for 5 seconds ==> ",timer, "*****",end="\r")
+                time.sleep(1)
+                t -= 1
+
+        print('Times up !!!')
+
+def minikube_install():
     print("""****************************"
-    ********Updating************
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo apt-get update", shell=True)
+********Updating************
+****************************""")
+    subprocess.call("sudo apt-get update", shell=True)
+    countdown()
 
     print ("""****************************
-    "*********Upgrading**********
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo apt-get upgrade -y", shell=True)
+*********Upgrading**********
+****************************""")
+    subprocess.call("sudo apt-get upgrade -y", shell=True)
+    countdown()
 
     print ("""****************************
-    *******Installing Docker****
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo apt -y install docker.io", shell=True)
+*******Installing Docker****
+****************************""")
+    subprocess.call("sudo apt -y install docker.io", shell=True)
+    countdown()
 
     print ("""****************************
-    *******Installing Kubectl********
-    "****************************""")
-    sleep 2
-    subprocess.check_output("sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl",  shell=True)
+*******Installing Kubectl********
+****************************""")
+    subprocess.call("sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl",  shell=True)
+    countdown()
 
     print ("""****************************
-    ******Installing Minikube***
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/", shell=True)
+******Installing Minikube***
+****************************""")
+    subprocess.call("sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/", shell=True)
+    countdown()
 
     print("""****************************
-    ****Installing Conntrack****
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo apt install conntrack", shell=True)
+****Installing Conntrack****
+****************************""")
+    subprocess.call("sudo apt install conntrack", shell=True)
+    countdown()
 
     print ("""****************************
-    *******Start Minikube*******
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo minikube start --vm-driver=none", shell=True)
+*******Start Minikube*******
+****************************""")
+    subprocess.call("sudo minikube start --vm-driver=none", shell=True)
+    countdown()
 
     print("""****************************
-    *******Minikube Status******
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo minikube status", shell=True)
+*******Minikube Status******
+****************************""")
+    subprocess.call("sudo minikube status", shell=True)
+    countdown()
 
     print("""****************************
-    *******Kubectl Version******
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo kubectl version", shell=True)
+*******Kubectl Version******
+****************************""")
+    subprocess.call("sudo kubectl version", shell=True)
+    countdown()
 
     print("""****************************
-    *******Getting node*********
-    ****************************""")
-    sleep 2
-    subprocess.check_output("sudo kubectl get nodes", shell=True)
+*******Getting node*********
+****************************""")
+    subprocess.call("sudo kubectl get nodes", shell=True)
+    countdown()
 
     print("""****************************
-    ***Setting up for testuser**
-    ****************************""")
-    sleep 2
-    subprocess.check_output("echo 'ubuntu:sidd123' | chpasswd", shell=True)
-    subprocess.check_output("mkdir -p /home/ubuntu/.kube", shell=True)
-    subprocess.check_output("sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config", shell=True)
-    subprocess.check_output("sudo chown -R ubuntu:ubuntu /home/ubuntu/.kube", shell=True)
-    subprocess.check_output("su - ubuntu", shell=True)
-    subprocess.check_output("kubectl get nodes", shell=True)
+***Setting up for testuser**
+****************************""")
+    subprocess.call("echo 'ubuntu:sidd123' | chpasswd", shell=True)
+    subprocess.call("mkdir -p /home/ubuntu/.kube", shell=True)
+    subprocess.call("sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config", shell=True)
+    subprocess.call("sudo chown -R ubuntu:ubuntu /home/ubuntu/.kube", shell=True)
+    subprocess.call("su - ubuntu", shell=True)
+    countdown()
+    minikube_status.status()
