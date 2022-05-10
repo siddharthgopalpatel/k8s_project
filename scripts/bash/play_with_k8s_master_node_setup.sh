@@ -1,5 +1,6 @@
 #yum update -y
 #yum upgrade -y
+yum-config-manager --disable kubernetes
 echo "************Installing softwares*******************"
 yum install vim openssh* net-tools sudo -y
 echo "****adding sidd user, making it sudo user, changing sidd and root user password***"
