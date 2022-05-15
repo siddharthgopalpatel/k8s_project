@@ -81,6 +81,6 @@ def minikube_install():
     subprocess.call("mkdir -p /home/ubuntu/.kube", shell=True)
     subprocess.call("sudo cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config", shell=True)
     subprocess.call("sudo chown -R ubuntu:ubuntu /home/ubuntu/.kube", shell=True)
-    subprocess.call("su - ubuntu", shell=True)
     countdown()
     minikube_status.status()
+    subprocess.call("su - ubuntu", shell=True)
