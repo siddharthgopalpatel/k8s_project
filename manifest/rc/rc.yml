@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+        name: myrc
+spec:
+        replicas: 1
+        selector:
+                app: test
+        template:
+                metadata:
+                        name: myrcpod
+                        labels:
+                                app: test
+                spec:
+                        containers:
+                        - name: myrcc
+                          image: ubuntu
+                          command: ["/bin/bash","-c","sleep 99999999"]
+                        restartPolicy: Always 

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mydeploy
+  name: mydeploy
+  namespace: nidhins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mydeploy
+  template:
+    metadata:
+      labels:
+        app: mydeploy
+    spec:
+      containers:
+      - image: ubuntu
+        name: ubuntu
+        command: ["/bin/bash","-c","sleep 9999999"]
+        resources:
+                limits:
+                        memory: 400M
+                requests:
+                        memory: 200M

@@ -1,0 +1,9 @@
+namespace = Nidhins
+Resourcequota= (Limit=1000M, Requests=500M)
+Limitrange = (Limit=500M, Requests=250M)
+mydeploy=(Limit=400M, Requests=200M)
+======
+Deployment pods will not inherit the values from limit range as the request and limit defined in the mydeployment
+======
+apt update && apt install stress procps -y
+stress --vm 1 --vm-bytes 200M --vm-hang 1 &

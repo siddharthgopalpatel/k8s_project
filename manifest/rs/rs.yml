@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+        name: myrs
+spec:
+        replicas: 1
+        selector:
+                matchLabels:
+                        app: test
+        template:
+                metadata:
+                        name: myrspod
+                        labels:
+                                app: test
+                spec:
+                        containers:
+                                - name: myrsc
+                                  image: ubuntu
+                                  command: ["/bin/bash","-c","sleep 99999"]
+                        restartPolicy: Always

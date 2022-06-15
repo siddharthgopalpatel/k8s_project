@@ -1,0 +1,21 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+        name: nidhins
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: myjob
+  namespace: nidhins
+spec:
+  completions: 5
+  parallelism: 2 
+  template:
+    spec:
+      containers:
+      - image: ubuntu
+        name: myjob
+        command: ["/bin/bash","-c","sleep 10"]
+      restartPolicy: Never

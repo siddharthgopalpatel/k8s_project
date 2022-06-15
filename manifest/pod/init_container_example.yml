@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nidhins
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: mypod
+  name: mypod
+  namespace: nidhins
+spec:
+  containers:
+  - image: nginx
+    name: mypod
+    volumeMounts:
+    - mountPath: "/usr/share/nginx/html"
+      name: www-data
+  initContainers:
+  - name: git-cloner
+    image: alpine/git
+    args:
+        - clone
+        - --single-branch
+        - --
+        - https://github.com/siddharthgopalpatel/learning_website
+        - /data
+    volumeMounts:
+    - mountPath: /data
+      name: www-data
+  volumes:
+  - name: www-data
+    emptyDir: {}
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: myservice
+  name: myservice
+  namespace: nidhins
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30000
+  selector:
+    run: mypod
+  type: NodePort

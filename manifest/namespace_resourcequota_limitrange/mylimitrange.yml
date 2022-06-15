@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mylimitrange
+  namespace: nidhins
+spec:
+  limits:
+  - default:
+      memory: 500M
+      #cpu: 1
+    defaultRequest:
+      memory: 250M
+      #cpu: 500m
+    type: Container

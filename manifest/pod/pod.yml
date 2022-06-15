@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: mypod
+  name: mypod
+spec:
+  nodeSelector:
+          love: nidhi
+  containers:
+  - image: nginx
+    name: mypod
+  restartPolicy: Always

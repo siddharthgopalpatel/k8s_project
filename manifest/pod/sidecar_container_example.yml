@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nidhins
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: mypod
+  name: mypod
+  namespace: nidhins
+spec:
+  containers:
+  - image: nginx
+    name: mainpod
+    volumeMounts:
+    - mountPath: "/usr/share/nginx/html"
+      name: www-data
+  - name: sidecarc
+    image: ubuntu
+    command: ["/bin/bash","-c","while true; do echo 'Love you Nidhi Babu\n' >> /home/index.html; sleep 5; done"]
+    volumeMounts:
+    - mountPath: /home
+      name: www-data
+  volumes:
+  - name: www-data
+    emptyDir: {}
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: myservice
+  name: myservice
+  namespace: nidhins
+spec:
+  ports:
+  - name: "80"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30000
+  selector:
+    run: mypod
+  type: NodePort

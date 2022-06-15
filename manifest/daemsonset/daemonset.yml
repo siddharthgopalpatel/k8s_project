@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: mydaemonset
+  name: mydaemonset
+spec:
+  selector:
+    matchLabels:
+      app: mydaemonset
+  template:
+    metadata:
+      labels:
+        app: mydaemonset
+    spec:
+      nodeSelector:
+              love: nidhi
+      containers:
+      - image: nginx
+        name: nginx
