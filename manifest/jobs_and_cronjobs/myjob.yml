@@ -10,8 +10,9 @@ metadata:
   name: myjob
   namespace: nidhins
 spec:
-  completions: 5
-  parallelism: 2 
+  completions: 10
+  parallelism: 3
+  activeDeadlineSeconds: 30  
   template:
     spec:
       containers:
